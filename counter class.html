@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COUNTER</title>
+
+    <style>
+
+        body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #333333;
+        }
+
+        #counter{
+            font-size: 48px;
+            margin-bottom: 50px;
+            color: black;
+        }
+
+        button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        background-color: #4285f4;
+        color: white;
+    }
+
+        button:hover {
+            background-color: #3367d6;
+        }
+
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        h1{
+            margin-bottom: -10px;
+            color: teal;
+        }
+
+        #increment{
+            background-color:limegreen;
+            color: black;
+            font-weight: 700;
+        }
+
+        #increment:hover{
+            background-color: lime;
+        }
+
+        #decrement{
+            font-weight: 700;
+            background-color: tomato;
+            color: black;
+        }
+
+        #decrement:hover{
+            background-color: orangered;
+        }
+
+    </style>
+
+</head>
+<body>
+
+  <div class="container">
+
+        <h1>Counter</h1>
+
+        <p id="counter">0</p>
+        
+        <div class="buttons">
+            <button id="increment">Increment</button>
+            <button id="startStop">Start</button>
+            <button id="decrement">Decrement</button>
+        </div>
+
+  </div>
+
+</body>
+</html>
+
+
+
+<script>
+
+    class Counter {
+      constructor() {
+        this.count = 0;
+        this.interval = null;
+        this.isAuto = false;
+        this.counterElement = document.querySelector("#counter");
+        this.startStopButton = document.querySelector("#startStop");
+        this.incrementButton = document.querySelector("#increment");
+        this.decrementButton = document.querySelector("#decrement");
+
+        this.startStopButton.addEventListener("click", this.toggleStartStop.bind(this));
+        this.incrementButton.addEventListener("click", this.increment.bind(this));
+        this.decrementButton.addEventListener("click", this.decrement.bind(this));
+      }
+
+      toggleStartStop() {
+        if (!this.isAuto) {
+          this.startAutoCounter();
+          this.startStopButton.textContent = "Stop";
+        } 
+        else 
+        {
+          this.stopAutoCounter();
+          this.startStopButton.textContent = "Start";
+        }
+      }
+
+      startAutoCounter() {
+        this.isAuto = true;
+        this.interval = setInterval(() => {
+          this.count++;
+          this.updateCounter();
+        }, 1000);
+      }
+
+      stopAutoCounter() {
+        this.isAuto = false;
+        clearInterval(this.interval);
+      }
+
+      increment() {
+        if (this.isAuto) {
+          this.stopAutoCounter();
+          this.isAuto = false;
+          this.startStopButton.textContent = "Start";
+        }
+        this.count++;
+        this.updateCounter();
+      }
+
+      decrement() {
+        if (this.isAuto) {
+          this.stopAutoCounter();
+          this.isAuto = false;
+          this.startStopButton.textContent = "Start";
+        }
+        this.count--;
+        this.updateCounter();
+      }
+
+      updateCounter() {
+        this.counterElement.textContent = this.count;
+      }
+    }
+
+    var counter = new Counter();
+
+</script>
